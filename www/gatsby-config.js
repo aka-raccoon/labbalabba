@@ -1,4 +1,6 @@
-require("dotenv").config();
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`
+});
 
 const siteMetadata = {
   title: `Novela by Narative`,
@@ -63,7 +65,7 @@ const plugins = [
       mailchimp: true,
       sources: {
         local: true,
-        contentful: false,
+        strapi: true,
       },
     },
   },
@@ -92,28 +94,20 @@ const plugins = [
         "https://narative.us19.list-manage.com/subscribe/post?u=65ef169332a03669b9538f6ef&amp;id=c55c426282",
     },
   },
-];
-
-/**
- * For development purposes if there's no Contentful Space ID and Access Token
- * set we don't want to add in gatsby-source-contentful because it will throw
- * an error.
- *
- * To enanble Contentful you must
- * 1. Create a new Space on contentful.com
- * 2. Import the Contentful Model from @narative/gatsby-theme-novela/conteful
- * 3. Add .env to www/ (see www/env.example)
- * 4. Enable contentful as a source in this file for @narative/gatsby-theme-novela
- */
-if (process.env.CONTENTFUL_SPACE_ID && process.env.CONTENTFUL_ACCESS_TOKEN) {
-  plugins.push({
-    resolve: "gatsby-source-contentful",
+  {
+    resolve: `gatsby-source-strapi`,
     options: {
-      spaceId: process.env.CONTENTFUL_SPACE_ID,
-      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      apiURL: process.env.GATSBY_STRAPI_URL,
+      queryLimit: 1000,
+      contentTypes: ["article", "author", "podcast", "move"],
+      singleTypes: ["site-metadata"],
+      loginData: {
+        identifier: process.env.GATSBY_STRAPI_USER,
+        password: process.env.GATSBY_STRAPI_PASSWORD,
+      },
     },
-  });
-}
+  },
+];
 
 module.exports = {
   siteMetadata,

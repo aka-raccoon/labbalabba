@@ -15,6 +15,7 @@
     "gatsby-plugin-mailchimp": "^5.1.2",
     "gatsby-plugin-manifest": "^2.2.4",
     "gatsby-source-filesystem": "^2.1.9",
+    "gatsby-source-strapi": "^0.0.12",
     "gatsby-theme-novela-labbalabba": "*",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
