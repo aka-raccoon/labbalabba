@@ -44,7 +44,7 @@ const plugins = [
   {
     resolve: `gatsby-source-strapi`,
     options: {
-      apiURL: process.env.GATSBY_STRAPI_URL,
+      apiURL: process.env.STRAPI_URL,
       queryLimit: 1000,
       contentTypes: ["article", "author", "podcast", "move"],
       singleTypes: ["site-metadata"],
