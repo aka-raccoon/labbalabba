@@ -122,17 +122,12 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     createParentChildLink({ parent: fileNode, child: node });
   }
 
-  if (node.internal.type === `ContentfulAuthor`) {
+
+  if (node.internal.type === `StrapiAuthor`) {
     createNodeField({
       node,
       name: `slug`,
-      value: generateSlug(
-        basePath,
-        'authors',
-        slugify(node.name, {
-          lower: true,
-        }),
-      ),
+      value: generateSlug(basePath, 'authors', slugify(node.name, { lower: true,})),
     });
 
     createNodeField({
@@ -141,4 +136,41 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
       value: themeOptions.authorsPage || false,
     });
   }
+
+  if (node.internal.type === "StrapiArticle" || node.internal.type ===  "StrapiPodcast") {
+    const newNode = {
+        id: createNodeId(`${node.id} >>> MdBody`),
+        parent: node.id,
+        children: [],
+        internal: {
+            content: node.body || " ",
+            type: "MdBody",
+            mediaType: "text/markdown",
+            contentDigest: crypto
+                .createHash("md5")
+                .update(node.body || " ")
+                .digest("hex"),
+        },
+    };
+    actions.createNode(newNode);
+    actions.createParentChildLink({
+        parent: node,
+        child: newNode,
+    });
+
+    createNodeField({
+      node,
+      name: `slug`,
+      value: generateSlug(
+        basePath,
+        generateArticlePermalink(
+          slugify(node.title, {
+            lower: true,
+          }),
+          node.published_at,
+        ),
+      ),
+    });
+
+  }  
 };

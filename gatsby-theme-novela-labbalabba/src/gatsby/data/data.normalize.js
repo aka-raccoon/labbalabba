@@ -64,9 +64,10 @@ module.exports.local = {
   },
 };
 
-module.exports.contentful = {
+
+module.exports.strapi = {
   articles: ({ node: article }) => {
-    const author = article.author.reduce((curr, next, index, array) => {
+    const author = article.authors.reduce((curr, next, index, array) => {
       if (array.length === 1) {
         return next.name;
       }
@@ -77,16 +78,17 @@ module.exports.contentful = {
     return {
       ...article,
       author,
-      body: article.body.childMdx.body,
-      timeToRead: article.body.childMdx.timeToRead,
+      body: article.childMdBody.childMdx.body,
+      slug: article.fields.slug,
+      hero: normalizeHero(article),
     };
-  },
+  }, 
   authors: ({ node: author }) => {
     return {
       ...author,
-      social: author.social.map(s => ({ url: s })),
       slug: author.fields.slug,
       authorsPage: author.fields.authorsPage,
+      avatar: normalizeAvatar(author),
     };
   },
 };

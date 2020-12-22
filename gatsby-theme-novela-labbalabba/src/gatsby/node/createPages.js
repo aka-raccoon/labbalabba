@@ -67,15 +67,14 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
 
   console.log(sources);
   // Defaulting to look at the local MDX files as sources.
-  const { local = true, contentful = false } = sources;
+  const { local = true, strapi = false } = sources;
 
   let authors;
   let articles;
 
   const dataSources = {
     local: { authors: [], articles: [] },
-    contentful: { authors: [], articles: [] },
-    netlify: { authors: [], articles: [] },
+    strapi: { authors: [], articles: [] },
   };
 
   if (rootPath) {
@@ -105,19 +104,26 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     }
   }
 
-  if (contentful) {
+  if (strapi) {
     try {
-      log('Querying Authors & Articles source:', 'Contentful');
-      const contentfulAuthors = await graphql(query.contentful.authors);
-      const contentfulArticles = await graphql(query.contentful.articles);
+      log('Querying Authors Articles & Podcasts source:', 'Strapi');
+      const strapiAuthors = await graphql(query.strapi.authors);
+      const strapiArticles = await graphql(query.strapi.articles);
+      const strapiPodcasts = await graphql(query.strapi.podcasts);
 
-      dataSources.contentful.authors = contentfulAuthors.data.authors.edges.map(
-        normalize.contentful.authors,
+
+      dataSources.strapi.authors = strapiAuthors.data.authors.edges.map(
+        normalize.strapi.authors,
       );
 
-      dataSources.contentful.articles = contentfulArticles.data.articles.edges.map(
-        normalize.contentful.articles,
+      dataSources.strapi.articles = strapiArticles.data.articles.edges.map(
+        normalize.strapi.articles,
       );
+
+      dataSources.strapi.podcasts = strapiPodcasts.data.podcasts.edges.map(
+        normalize.strapi.articles,
+      )
+
     } catch (error) {
       console.error(error);
     }
@@ -126,8 +132,8 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
   // Combining together all the articles from different sources
   articles = [
     ...dataSources.local.articles,
-    ...dataSources.contentful.articles,
-    ...dataSources.netlify.articles,
+    ...dataSources.strapi.articles,
+    ...dataSources.strapi.podcasts
   ].sort(byDate);
 
   const articlesThatArentSecret = articles.filter(article => !article.secret);
@@ -136,8 +142,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
   authors = getUniqueListBy(
     [
       ...dataSources.local.authors,
-      ...dataSources.contentful.authors,
-      ...dataSources.netlify.authors,
+      ...dataSources.strapi.authors,
     ],
     'name',
   );
