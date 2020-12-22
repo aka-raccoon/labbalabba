@@ -24,28 +24,25 @@ module.exports = ({
       options: {
         query: `
           {
-            site {
-              siteMetadata {
-                title
-                description
-                siteUrl
-                site_url: siteUrl
-              }
+            strapiSiteMetadata {
+              title
+              description
+              siteUrl
             }
           }
         `,
         setup: ({
           query: {
-            site: { siteMetadata },
+            strapiSiteMetadata,
           },
           ...rest
         }) => {
-          siteMetadata.feed_url = siteMetadata.siteUrl + '/rss.xml';
-          siteMetadata.image_url =
-            siteMetadata.siteUrl + '/icons/icon-512x512.png';
-          const siteMetadataModified = siteMetadata;
-          siteMetadataModified.feed_url = `${siteMetadata.siteUrl}/rss.xml`;
-          siteMetadataModified.image_url = `${siteMetadata.siteUrl}/icons/icon-512x512.png`;
+          strapiSiteMetadata.feed_url = strapiSiteMetadata.siteUrl + '/rss.xml';
+          strapiSiteMetadata.image_url =
+          strapiSiteMetadata.siteUrl + '/icons/icon-512x512.png';
+          const siteMetadataModified = strapiSiteMetadata;
+          siteMetadataModified.feed_url = `${strapiSiteMetadata.siteUrl}/rss.xml`;
+          siteMetadataModified.image_url = `${strapiSiteMetadata.siteUrl}/icons/icon-512x512.png`;
 
           return {
             ...siteMetadataModified,
@@ -54,8 +51,8 @@ module.exports = ({
         },
         feeds: [
           {
-            serialize: ({ query: { site, allArticle, allContentfulArticle } }) => {
-              if (local && !contentful) {
+            serialize: ({ query: { strapiSiteMetadata, allArticle, allStrapiPodcast } }) => {
+              if (local && !strapi) {
                 return allArticle.edges
                   .filter(edge => !edge.node.secret)
                   .map(edge => {
@@ -63,29 +60,29 @@ module.exports = ({
                       ...edge.node,
                       description: edge.node.excerpt,
                       date: edge.node.date,
-                      url: site.siteMetadata.siteUrl + edge.node.slug,
-                      guid: site.siteMetadata.siteUrl + edge.node.slug,
+                      url: strapiSiteMetadata.siteUrl + '/' + edge.node.slug,
+                      guid: strapiSiteMetadata.siteUrl + '/' + edge.node.slug,
                       // body is raw JS and MDX; will need to be processed before it can be used
                       // custom_elements: [{ "content:encoded": edge.node.body }],
                       author: edge.node.author,
                     };
                   });
-              } else if (!local && contentful) {
-                return allContentfulArticle.edges
+              } else if (!local && strapi) {
+                return allStrapiPodcast.edges
                   .filter(edge => !edge.node.secret)
                   .map(edge => {
                     return {
                       ...edge.node,
                       description: edge.node.excerpt,
                       date: edge.node.date,
-                      url: site.siteMetadata.siteUrl + '/' + edge.node.slug,
-                      guid: site.siteMetadata.siteUrl + '/' + edge.node.slug,
-                      custom_elements: [{ "content:encoded": edge.node.body.childMarkdownRemark.html }],
+                      url: strapiSiteMetadata.siteUrl + '/' + edge.node.slug,
+                      guid: strapiSiteMetadata.siteUrl + '/' + edge.node.slug,
+                      // custom_elements: [{ "content:encoded": edge.node.body.childMarkdownRemark.html }],
                       author: edge.node.author ? edge.node.author.name : '',
                     };
                   });
               } else {
-                const allArticlesData = { ...allArticle, ...allContentfulArticle };
+                const allArticlesData = { ...allArticle, ...allStrapiPodcast };
                 return allArticlesData.edges
                   .filter(edge => !edge.node.secret)
                   .map(edge => {
@@ -93,8 +90,8 @@ module.exports = ({
                       ...edge.node,
                       description: edge.node.excerpt,
                       date: edge.node.date,
-                      url: site.siteMetadata.siteUrl + edge.node.slug,
-                      guid: site.siteMetadata.siteUrl + edge.node.slug,
+                      url: strapiSiteMetadata.siteUrl + edge.node.slug,
+                      guid: strapiSiteMetadata.siteUrl + edge.node.slug,
                       // custom_elements: [{ "content:encoded": edge.node.body }],
                       author: edge.node.author ? edge.node.author.name : '',
                     };

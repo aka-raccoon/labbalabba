@@ -40,21 +40,15 @@ interface HelmetProps {
 
 const seoQuery = graphql`
   {
-    allSite {
-      edges {
-        node {
-          siteMetadata {
-            description
-            social {
-              url
-              name
-            }
-            siteUrl
-            title
-            name
-          }
-        }
+    strapiSiteMetadata {
+      description
+      name
+      siteUrl
+      social {
+        name
+        url
       }
+      title
     }
   }
 `;
@@ -93,7 +87,7 @@ const SEO: React.FC<HelmetProps> = ({
   isSecret,
 }) => {
   const results = useStaticQuery(seoQuery);
-  const site = results.allSite.edges[0].node.siteMetadata;
+  const site = results.strapiSiteMetadata;
   const twitter = site.social.find(option => option.name === 'twitter') || {};
   const github = site.social.find(option => option.name === 'github') || {};
   const linkedin = site.social.find(option => option.name === 'linkedin') || {};

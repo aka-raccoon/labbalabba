@@ -24,14 +24,8 @@ import { Template } from "@types";
 
 const siteQuery = graphql`
   {
-    allSite {
-      edges {
-        node {
-          siteMetadata {
-            name
-          }
-        }
-      }
+    strapiSiteMetadata {
+      name
     }
   }
 `;
@@ -43,7 +37,7 @@ const Article: Template = ({ pageContext, location }) => {
   const [contentHeight, setContentHeight] = useState<number>(0);
 
   const results = useStaticQuery(siteQuery);
-  const name = results.allSite.edges[0].node.siteMetadata.name;
+  const name = results.strapiSiteMetadata.name;
 
   const { article, authors, next } = pageContext;
 

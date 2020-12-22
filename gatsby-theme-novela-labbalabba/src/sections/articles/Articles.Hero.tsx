@@ -12,16 +12,10 @@ import { GridLayoutContext } from './Articles.List.Context';
 
 const authorQuery = graphql`
   {
-    site: allSite {
-      edges {
-        node {
-          siteMetadata {
-            hero {
-              heading
-              maxWidth
-            }
-          }
-        }
+    strapiSiteMetadata {
+      hero {
+        heading
+        maxWidth
       }
     }
   }
@@ -33,7 +27,7 @@ const ArticlesHero: React.FC<IAuthor> = ({ authors }) => {
   );
 
   const results = useStaticQuery(authorQuery);
-  const hero = results.site.edges[0].node.siteMetadata.hero;
+  const hero = results.strapiSiteMetadata.hero;
   const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles';
   const featuredAuthor = authors.find(author => author.featured);
 

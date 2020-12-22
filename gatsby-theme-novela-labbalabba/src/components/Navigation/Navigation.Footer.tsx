@@ -9,17 +9,11 @@ import mediaqueries from "@styles/media";
 
 const siteQuery = graphql`
   {
-    allSite {
-      edges {
-        node {
-          siteMetadata {
-            name
-            social {
-              url
-              name
-            }
-          }
-        }
+    strapiSiteMetadata {
+      name
+      social {
+        name
+        url
       }
     }
     allMdx(
@@ -39,7 +33,7 @@ const siteQuery = graphql`
 
 const Footer: React.FC<{}> = () => {
   const results = useStaticQuery(siteQuery);
-  const { name, social } = results.allSite.edges[0].node.siteMetadata;
+  const { name, social } = results.strapiSiteMetadata;
 
   const copyrightDate = (() => {
     const { edges } = results.allMdx;

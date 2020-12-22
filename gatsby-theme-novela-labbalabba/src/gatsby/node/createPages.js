@@ -59,10 +59,8 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
 
   const { data } = await graphql(`
     query siteQuery {
-      site {
-        siteMetadata {
-          siteUrl
-        }
+      strapiSiteMetadata {
+        siteUrl
       }
     }
   `);
@@ -221,7 +219,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
         article,
         authors: authorsThatWroteTheArticle,
         basePath,
-        permalink: `${data.site.siteMetadata.siteUrl}${article.slug}/`,
+        permalink: `${data.strapiSiteMetadata.siteUrl}${article.slug}/`,
         slug: article.slug,
         id: article.id,
         title: article.title,

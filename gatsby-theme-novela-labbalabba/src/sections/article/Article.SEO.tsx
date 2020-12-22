@@ -7,15 +7,8 @@ import { graphql, useStaticQuery } from 'gatsby';
 
 const siteQuery = graphql`
   {
-    allSite {
-      edges {
-        node {
-          siteMetadata {
-            name
-            siteUrl
-          }
-        }
-      }
+    strapiSiteMetadata {
+      siteUrl
     }
   }
 `;
@@ -34,7 +27,7 @@ const ArticleSEO: React.FC<ArticleSEOProps> = ({
   imagelocation,
 }) => {
   const results = useStaticQuery(siteQuery);
-  const siteUrl = results.allSite.edges[0].node.siteMetadata.siteUrl;
+  const siteUrl = results.strapiSiteMetadata.siteUrl;
 
   const authorsName = authors.map(author => (author.name));
   const authorsSlug = authors.map(author => (author.slug));
