@@ -6,14 +6,12 @@ const plugins = [
   {
     resolve: "gatsby-theme-novela-labbalabba",
     options: {
-      contentPosts: "content/posts",
-      contentAuthors: "content/authors",
       rootPath: "/",
       basePath: "/",
       authorsPage: true,
       mailchimp: true,
       sources: {
-        local: true,
+        local: false,
         strapi: true,
       },
     },
