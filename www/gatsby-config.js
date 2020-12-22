@@ -19,8 +19,8 @@ const plugins = [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: `Novela by Narative`,
-      short_name: `Novela`,
+      name: `Labba Labba`,
+      short_name: `Labba Labba`,
       start_url: `/`,
       background_color: `#fff`,
       theme_color: `#fff`,
@@ -31,14 +31,14 @@ const plugins = [
   {
     resolve: `gatsby-plugin-google-analytics`,
     options: {
-      trackingId: "UA-118232427-3",
+      trackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
     },
   },
   {
     resolve: "gatsby-plugin-mailchimp",
     options: {
       endpoint:
-        "https://narative.us19.list-manage.com/subscribe/post?u=65ef169332a03669b9538f6ef&amp;id=c55c426282",
+        process.env.MAILCHIMP_ENDPOINT,
     },
   },
   {
@@ -49,8 +49,8 @@ const plugins = [
       contentTypes: ["article", "author", "podcast", "move"],
       singleTypes: ["site-metadata"],
       loginData: {
-        identifier: process.env.GATSBY_STRAPI_USER,
-        password: process.env.GATSBY_STRAPI_PASSWORD,
+        identifier: process.env.STRAPI_USER,
+        password: process.env.STRAPI_PASSWORD,
       },
     },
   },
