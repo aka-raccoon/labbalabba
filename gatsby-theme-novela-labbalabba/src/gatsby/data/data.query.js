@@ -110,6 +110,7 @@ module.exports.strapi = {
           timeToRead: duration
           fields {
             slug
+            category
           }           
           childMdBody {
             childMdx {
@@ -152,6 +153,7 @@ module.exports.strapi = {
           secret
           fields {
             slug
+            category
           }            
           title
           authors {

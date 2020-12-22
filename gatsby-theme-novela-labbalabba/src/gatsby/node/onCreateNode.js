@@ -172,5 +172,11 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
       ),
     });
 
+    createNodeField({
+      node,
+      name: `category`,
+      value: node.internal.type.toLowerCase().replace("strapi", ""),
+    });
+
   }  
 };

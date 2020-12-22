@@ -12,6 +12,7 @@ const templatesDirectory = path.resolve(__dirname, '../../templates');
 const templates = {
   articles: path.resolve(templatesDirectory, 'articles.template.tsx'),
   article: path.resolve(templatesDirectory, 'article.template.tsx'),
+  podcast: path.resolve(templatesDirectory, 'podcast.template.tsx'),
   author: path.resolve(templatesDirectory, 'author.template.tsx'),
 };
 
@@ -219,7 +220,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
 
     createPage({
       path: article.slug,
-      component: templates.article,
+      component: templates[article.fields.category],
       context: {
         article,
         authors: authorsThatWroteTheArticle,
@@ -228,7 +229,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
         slug: article.slug,
         id: article.id,
         title: article.title,
-        canonicalUrl: article.canonical_url,
+        canonicalUrl: `${data.strapiSiteMetadata.siteUrl}${article.slug}/`,
         mailchimp,
         next,
       },
