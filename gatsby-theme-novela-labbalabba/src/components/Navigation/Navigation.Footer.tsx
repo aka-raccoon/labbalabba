@@ -11,21 +11,10 @@ const siteQuery = graphql`
   {
     strapiSiteMetadata {
       name
+      yearEstablished
       social {
         name
         url
-      }
-    }
-    allMdx(
-      sort: { fields: frontmatter___date, order: ASC }
-      filter: { frontmatter: { date: { ne: null } } }
-    ) {
-      edges {
-        node {
-          frontmatter {
-            date
-          }
-        }
       }
     }
   }
@@ -33,14 +22,11 @@ const siteQuery = graphql`
 
 const Footer: React.FC<{}> = () => {
   const results = useStaticQuery(siteQuery);
-  const { name, social } = results.strapiSiteMetadata;
+  const { name, yearEstablished, social } = results.strapiSiteMetadata;
 
   const copyrightDate = (() => {
-    const { edges } = results.allMdx;
-    const years = [0, edges.length - 1].map((edge) =>
-      new Date(edges[edge].node.frontmatter.date).getFullYear()
-    );
-    return years[0] === years[1] ? `${years[0]}` : `${years[0]}–${years[1]}`;
+    const currentYear = new Date().getFullYear();
+    return yearEstablished === currentYear ? `${yearEstablished}` : `${yearEstablished}–${currentYear}`;
   })();
 
   return (
