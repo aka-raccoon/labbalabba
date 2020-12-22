@@ -7,7 +7,7 @@
   "scripts": {
     "build": "yarn workspace www build",
     "dev": "yarn start",
-    "clean": "yarn workspace www clean",
+    "clean": "yarn workspace www clean && yarn workspace gatsby-theme-novela-labbalabba clean",
     "lint": "eslint --ignore-path .gitignore .",
     "start": "yarn workspace www develop",
     "bootstrap": "yarn lerna bootstrap",
