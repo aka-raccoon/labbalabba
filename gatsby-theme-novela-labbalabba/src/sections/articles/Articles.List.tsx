@@ -140,7 +140,7 @@ const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
             {article.excerpt}
           </Excerpt>
           <MetaData>
-          <CategoryLink to={linkTo} data-a11y="false">{capitalize(article.fields.category)}</CategoryLink> · {article.date} {articleLenght(article.timeToRead)}
+          {capitalize(article.fields.category)} · {article.date} {articleLenght(article.timeToRead)}
           </MetaData>
           
         </div>
