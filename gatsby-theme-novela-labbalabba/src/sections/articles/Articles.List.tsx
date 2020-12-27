@@ -11,6 +11,7 @@ import { IArticle } from '@types';
 
 import { GridLayoutContext } from './Articles.List.Context';
 
+
 /**
  * Tiles
  * [LONG], [SHORT]
@@ -87,6 +88,18 @@ const ArticlesList: React.FC<ArticlesListProps> = ({
 
 export default ArticlesList;
 
+
+function slugify(string, base) {
+  const slug = string
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036F]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '');
+
+  return `${base}/${slug}`.replace(/\/\/+/g, '/');
+}
+
 const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
   if (!article) return null;
 
@@ -97,6 +110,17 @@ const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
     imageSource &&
     Object.keys(imageSource).length !== 0 &&
     imageSource.constructor === Object;
+
+  const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }
+
+  const articleLenght = (timeToRead) => {
+    if (timeToRead) {return " · length: " + timeToRead + " min"}
+  }
+
+  const linkTo = slugify(article.fields.category, "/category")
 
   return (
     <ArticleLink to={article.slug} data-a11y="false">
@@ -116,8 +140,9 @@ const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
             {article.excerpt}
           </Excerpt>
           <MetaData>
-            {article.date} · {article.timeToRead} min read
+          <CategoryLink to={linkTo} data-a11y="false">{capitalize(article.fields.category)}</CategoryLink> · {article.date} {articleLenght(article.timeToRead)}
           </MetaData>
+          
         </div>
       </Item>
     </ArticleLink>
@@ -352,6 +377,48 @@ const ArticleLink = styled(Link)`
   transition: transform 0.33s var(--ease-out-quart);
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
+  &:hover ${ImageContainer}, &:focus ${ImageContainer} {
+    transform: translateY(-1px);
+    box-shadow: 0 50px 80px -20px rgba(0, 0, 0, 0.27),
+      0 30px 50px -30px rgba(0, 0, 0, 0.3);
+  }
+
+  &:hover h2,
+  &:focus h2 {
+    color: ${p => p.theme.colors.accent};
+  }
+
+  &[data-a11y='true']:focus::after {
+    content: '';
+    position: absolute;
+    left: -1.5%;
+    top: -2%;
+    width: 103%;
+    height: 104%;
+    border: 3px solid ${p => p.theme.colors.accent};
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: 5px;
+  }
+
+  ${mediaqueries.phablet`
+    &:hover ${ImageContainer} {
+      transform: none;
+      box-shadow: initial;
+    }
+
+    &:active {
+      transform: scale(0.97) translateY(3px);
+    }
+  `}
+`;
+
+
+const CategoryLink = styled(Link)`
+  border-radius: 5px;
+  z-index: 1;
+  transition: transform 0.33s var(--ease-out-quart);
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  
   &:hover ${ImageContainer}, &:focus ${ImageContainer} {
     transform: translateY(-1px);
     box-shadow: 0 50px 80px -20px rgba(0, 0, 0, 0.27),
