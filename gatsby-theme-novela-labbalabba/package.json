@@ -69,6 +69,7 @@
     "gatsby-transformer-yaml": "^2.2.4",
     "lodash": "^4.17.15",
     "prism-react-renderer": "^0.1.7",
+    "react-h5-audio-player": "^3.5.0",
     "react-helmet": "^5.2.1",
     "react-live": "^2.2.0",
     "react-medium-image-zoom": "^4.0.2",

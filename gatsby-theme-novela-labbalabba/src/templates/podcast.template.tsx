@@ -21,6 +21,9 @@ import ArticleShare from "../sections/article/Article.Share";
 import ArticleFooter from './article.footer.template';
 
 import { Template } from "@types";
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
+
 
 const siteQuery = graphql`
   {
@@ -88,6 +91,13 @@ const Article: Template = ({ pageContext, location }) => {
       <ArticleBody ref={contentSectionRef}>
         <MDXRenderer content={article.body}>
           <ArticleShare />
+          <AudioBody>
+            <AudioPlayer
+                src={article.podcastUrl}
+                customAdditionalControls={[]}
+                // other props here
+            />  
+          </AudioBody>          
         </MDXRenderer>
       </ArticleBody>
       <ArticleFooter pageContext={pageContext} />
@@ -174,4 +184,53 @@ const FooterNext = styled.h3`
 
 const FooterSpacer = styled.div`
   margin-bottom: 65px;
+`;
+
+const AudioBody = styled.div`
+  max-width: 800px;
+  width: ${(910 / 1140) * 100}%;
+  margin: 55px auto;
+
+  .rhap_container {
+    background: ${p => p.theme.colors.inputBackground};
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 10);
+    border-radius: 10px;
+  }
+
+  .rhap_download-progress {
+    background-color: ${p => p.theme.colors.grey};
+  }
+
+  .rhap_progress-filled {
+    background-color: ${p => p.theme.colors.primary};
+  }
+
+  .rhap_progress-indicator {
+    background: ${p => p.theme.colors.primary};
+  }
+
+  .rhap_time {
+    color: ${p => p.theme.colors.articleText};
+  }
+
+  .rhap_main-controls-button {
+    color: ${p => p.theme.colors.articleText};
+  }
+
+  .rhap_volume-button {
+    color: ${p => p.theme.colors.articleText};
+  }
+
+  .rhap_volume-indicator {
+    background: ${p => p.theme.colors.primary};
+  }
+
+  .rhap_volume-filled {
+    background-color: ${p => p.theme.colors.primary};
+  }
+
+  .rhap_volume-bar {
+    background-color: ${p => p.theme.colors.grey};
+  }  
+
 `;
