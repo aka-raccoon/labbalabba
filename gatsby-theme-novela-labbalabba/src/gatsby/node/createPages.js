@@ -56,6 +56,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     pageLength = 6,
     sources = {},
     mailchimp = '',
+    strapiContentTypes,
   } = themeOptions;
 
   const { data } = await graphql(`
@@ -71,7 +72,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
   const { local = true, strapi = false } = sources;
 
   let authors;
-  let articles;
+  const articles = [];
 
   const dataSources = {
     local: { authors: [], articles: [] },
@@ -109,33 +110,28 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     try {
       log('Querying Authors Articles & Podcasts source:', 'Strapi');
       const strapiAuthors = await graphql(query.strapi.authors);
-      const strapiArticles = await graphql(query.strapi.articles);
-      const strapiPodcasts = await graphql(query.strapi.podcasts);
 
 
       dataSources.strapi.authors = strapiAuthors.data.authors.edges.map(
         normalize.strapi.authors,
       );
 
-      dataSources.strapi.articles = strapiArticles.data.articles.edges.map(
-        normalize.strapi.articles,
-      );
+    
 
-      dataSources.strapi.podcasts = strapiPodcasts.data.podcasts.edges.map(
-        normalize.strapi.articles,
-      )
+      for (const contentType of  strapiContentTypes) {
+        strapiContent = await graphql(query.strapi[contentType]);
 
+        dataSources.strapi[contentType] = strapiContent.data[contentType].edges.map(normalize.strapi.articles);
+        articles.push(...dataSources.strapi[contentType])
+      };
+      
     } catch (error) {
       console.error(error);
     }
   }
 
-  // Combining together all the articles from different sources
-  articles = [
-    ...dataSources.local.articles,
-    ...dataSources.strapi.articles,
-    ...dataSources.strapi.podcasts
-  ].sort(byDate);
+  articles.push(...dataSources.local.articles)
+  articles.sort(byDate);
 
   const articlesThatArentSecret = articles.filter(article => !article.secret);
 

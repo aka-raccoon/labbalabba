@@ -14,6 +14,7 @@ const plugins = [
         local: false,
         strapi: true,
       },
+      strapiContentTypes: ["articles", "podcasts"],
     },
   },
   {
