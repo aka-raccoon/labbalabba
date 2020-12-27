@@ -20,6 +20,13 @@ const ArticleHero: React.FC<ArticleHeroProps> = ({ article, authors }) => {
     article.hero &&
     Object.keys(article.hero.full).length !== 0 &&
     article.hero.full.constructor === Object;
+  const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }   
+  const articleLenght = (timeToRead) => {
+    if (timeToRead) {return " · length: " + timeToRead + " min"}
+  }   
 
   return (
     <Hero>
@@ -28,7 +35,7 @@ const ArticleHero: React.FC<ArticleHeroProps> = ({ article, authors }) => {
         <HeroSubtitle hasCoAUthors={hasCoAUthors}>
           <ArticleAuthors authors={authors} />
           <ArticleMeta hasCoAUthors={hasCoAUthors}>
-            {article.date} · {article.timeToRead} min read
+            {capitalize(article.fields.category)} · {article.date} {articleLenght(article.timeToRead)}
           </ArticleMeta>
         </HeroSubtitle>
       </Header>
