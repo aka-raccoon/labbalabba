@@ -53,7 +53,7 @@ const PodcastCategory: React.FC<{}> = () => {
   const [colorMode] = useColorMode();
   const isDark = colorMode === `dark`;
   const fill = isDark ? "#fff" : "#000";
-  const url = typeof window !== 'undefined' ? window.location.href : '';
+  const url = typeof window !== 'undefined' ? window.location.pathname : '';
   const podcastUrl = "/category/podcast"
 
   return (
