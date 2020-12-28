@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
+    "serve": "gatsby serve",
     "develop": "rm -rf .cache && gatsby develop -H 0.0.0.0 -p 8001",
     "clean": "gatsby clean"
   },
@@ -14,6 +15,7 @@
     "gatsby-plugin-google-analytics": "^2.1.6",
     "gatsby-plugin-mailchimp": "^5.1.2",
     "gatsby-plugin-manifest": "^2.2.4",
+    "gatsby-plugin-offline": "^3.7.1",
     "gatsby-source-filesystem": "^2.1.9",
     "gatsby-source-strapi": "^0.0.12",
     "gatsby-theme-novela-labbalabba": "*",

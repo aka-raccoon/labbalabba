@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn workspace www build",
+    "serve": "yarn workspace www serve",
     "dev": "yarn start",
     "clean": "yarn workspace www clean && yarn workspace gatsby-theme-novela-labbalabba clean",
     "lint": "eslint --ignore-path .gitignore .",
