@@ -95,8 +95,8 @@ module.exports.local = {
 };
 
 module.exports.strapi = {
-  articles: `{
-    articles: allStrapiArticle(sort: {fields: [published_at, title], order: DESC}, limit: 1000) {
+  article: `{
+    article: allStrapiArticle(sort: {fields: [published_at, title], order: DESC}, limit: 1000) {
       edges {
         node {
           id
@@ -145,8 +145,8 @@ module.exports.strapi = {
       }
     }
   }`,
-  podcasts: `{
-    podcasts: allStrapiPodcast(sort: {fields: [published_at, title], order: DESC}, limit: 1000) {
+  podcast: `{
+    podcast: allStrapiPodcast(sort: {fields: [published_at, title], order: DESC}, limit: 1000) {
       edges {
         node {
           id
