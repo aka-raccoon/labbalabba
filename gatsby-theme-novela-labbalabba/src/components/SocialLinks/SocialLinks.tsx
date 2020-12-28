@@ -32,7 +32,8 @@ const icons = {
   tripadvisor: Icons.TripAdvisor,
   buymeacoffee: Icons.Buymeacoffee,
   mailto: Icons.Mailto,
-  url: Icons.Url
+  url: Icons.Url,
+  anchor: Icons.Anchor,
 };
 
 const getHostname = url => {
