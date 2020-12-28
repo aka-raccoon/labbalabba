@@ -19,6 +19,7 @@ import TripAdvisor from './social/TripAdvisor.Icon';
 import Buymeacoffee from './social/Buymeacoffee.Icon';
 import Mailto from './social/Mailto.Icon';
 import Url from './social/Url.Icon';
+import Anchor from './social/Anchor.Icon'
 
 // UI
 import ChevronLeft from './ui/ChevronLeft.Icon';
@@ -30,6 +31,7 @@ import ToggleOpen from './ui/ToggleOpen.Icon';
 import ToggleClose from './ui/ToggleClose.Icon';
 import Rows from './ui/Rows.Icon';
 import Tiles from './ui/Tiles.Icon';
+import Podcast from './ui/Podcast.Icon';
 
 export default {
   Behance,
@@ -52,6 +54,7 @@ export default {
   Buymeacoffee,
   Mailto,
   Url,
+  Anchor,
 
   ChevronLeft,
   Copied,
@@ -62,4 +65,5 @@ export default {
   ToggleOpen,
   Rows,
   Tiles,
+  Podcast,
 };

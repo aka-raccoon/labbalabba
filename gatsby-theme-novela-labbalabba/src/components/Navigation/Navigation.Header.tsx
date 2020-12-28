@@ -25,6 +25,7 @@ const siteQuery = graphql`
   }
 `;
 
+
 const DarkModeToggle: React.FC<{}> = () => {
   const [colorMode, setColorMode] = useColorMode();
   const isDark = colorMode === `dark`;
@@ -44,6 +45,27 @@ const DarkModeToggle: React.FC<{}> = () => {
     >
       <MoonOrSun isDark={isDark} />
       <MoonMask isDark={isDark} />
+    </IconWrapper>
+  );
+};
+
+const PodcastCategory: React.FC<{}> = () => {
+  const [colorMode] = useColorMode();
+  const isDark = colorMode === `dark`;
+  const fill = isDark ? "#fff" : "#000";
+  const url = typeof window !== 'undefined' ? window.location.href : '';
+  const podcastUrl = "/category/podcast"
+
+  return (
+    <IconWrapper
+      isDark={isDark}
+      onClick={() => navigate(podcastUrl)}
+      data-a11y="false"
+      aria-label="Show all podcasts"
+      title="Show all podcasts"
+      colorOnActive={url == podcastUrl}
+    >
+    <Icons.Podcast fill={fill} />
     </IconWrapper>
   );
 };
@@ -135,6 +157,7 @@ const NavigationHeader: React.FC<{}> = () => {
             </button>
           ) : (
             <>
+              <PodcastCategory />
               <SharePageButton />
               <DarkModeToggle />
             </>
@@ -246,7 +269,7 @@ const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
   }
 `;
 
-const IconWrapper = styled.button<{ isDark: boolean }>`
+const IconWrapper = styled.button<{ isDark: boolean;  colorOnActive?: boolean }>`
   opacity: 0.5;
   position: relative;
   border-radius: 5px;
@@ -257,6 +280,7 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
   justify-content: center;
   transition: opacity 0.3s ease;
   margin-left: 30px;
+  opacity: ${p => (p.colorOnActive ? "1" : "0.5")};
 
   &:hover {
     opacity: 1;
