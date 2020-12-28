@@ -9,12 +9,13 @@ const plugins = [
       rootPath: "/",
       basePath: "/",
       authorsPage: true,
-      mailchimp: true,
+      mailchimp: false,
+      categoryPage: true,
       sources: {
         local: false,
         strapi: true,
       },
-      strapiContentTypes: ["articles", "podcasts"],
+      strapiContentTypes: ["article", "podcast"],
     },
   },
   {
@@ -29,6 +30,7 @@ const plugins = [
       icon: `src/assets/favicon.png`,
     },
   },
+  'gatsby-plugin-offline',
   {
     resolve: `gatsby-plugin-google-analytics`,
     options: {

@@ -14,6 +14,7 @@ const templates = {
   article: path.resolve(templatesDirectory, 'article.template.tsx'),
   podcast: path.resolve(templatesDirectory, 'podcast.template.tsx'),
   author: path.resolve(templatesDirectory, 'author.template.tsx'),
+  category: path.resolve(templatesDirectory, 'category.template.tsx'),
 };
 
 const query = require('../data/data.query');
@@ -52,6 +53,8 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     rootPath,
     basePath = '/',
     authorsPath = '/authors',
+    categoryPath = '/category',
+    categoryPage = false,
     authorsPage = true,
     pageLength = 6,
     sources = {},
@@ -262,4 +265,40 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
       });
     });
   }
+
+  if (categoryPage) {
+    log('Creating', 'category page');
+
+    strapiContentTypes.forEach(contentType => {
+      const categoryArticles = articlesThatArentSecret.filter(
+        article =>
+          article.fields.category.toLowerCase().includes(contentType),
+      );
+      const path = slugify(contentType, categoryPath);
+      
+      createPaginatedPages({
+        edges: categoryArticles,
+        pathPrefix: path,
+        createPage,
+        pageLength,
+        pageTemplate: templates.category,
+        buildPath: buildPaginatedPath,
+        context: {
+          authors,
+          skip: pageLength,
+          limit: pageLength,
+          contentType,
+        },
+      });
+    });
+  }  
 };
+
+
+
+
+
+
+
+
+
