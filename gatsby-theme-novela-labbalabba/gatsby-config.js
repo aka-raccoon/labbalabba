@@ -7,9 +7,6 @@ module.exports = ({
   sources: { local, strapi } = { local: false, strapi: true },
 }) => ({
   pathPrefix,
-  mapping: {
-    'Mdx.frontmatter.author': `AuthorsYaml`,
-  },
   plugins: [
     `gatsby-plugin-typescript`,
     `gatsby-image`,
@@ -39,7 +36,7 @@ module.exports = ({
         }) => {
           strapiSiteMetadata.feed_url = strapiSiteMetadata.siteUrl + '/rss.xml';
           strapiSiteMetadata.image_url =
-          strapiSiteMetadata.siteUrl + '/icons/icon-512x512.png';
+            strapiSiteMetadata.siteUrl + '/icons/icon-512x512.png';
           const siteMetadataModified = strapiSiteMetadata;
           siteMetadataModified.feed_url = `${strapiSiteMetadata.siteUrl}/rss.xml`;
           siteMetadataModified.image_url = `${strapiSiteMetadata.siteUrl}/icons/icon-512x512.png`;
@@ -51,124 +48,61 @@ module.exports = ({
         },
         feeds: [
           {
-            serialize: ({ query: { strapiSiteMetadata, allArticle, allStrapiPodcast } }) => {
-              if (local && !strapi) {
-                return allArticle.edges
-                  .filter(edge => !edge.node.secret)
-                  .map(edge => {
-                    return {
-                      ...edge.node,
-                      description: edge.node.excerpt,
-                      date: edge.node.date,
-                      url: strapiSiteMetadata.siteUrl + '/' + edge.node.slug,
-                      guid: strapiSiteMetadata.siteUrl + '/' + edge.node.slug,
-                      // body is raw JS and MDX; will need to be processed before it can be used
-                      // custom_elements: [{ "content:encoded": edge.node.body }],
-                      author: edge.node.author,
-                    };
-                  });
-              } else if (!local && strapi) {
-                return allStrapiPodcast.edges
-                  .filter(edge => !edge.node.secret)
-                  .map(edge => {
-                    return {
-                      ...edge.node,
-                      description: edge.node.excerpt,
-                      date: edge.node.date,
-                      url: strapiSiteMetadata.siteUrl + '/' + edge.node.slug,
-                      guid: strapiSiteMetadata.siteUrl + '/' + edge.node.slug,
-                      // custom_elements: [{ "content:encoded": edge.node.body.childMarkdownRemark.html }],
-                      author: edge.node.author ? edge.node.author.name : '',
-                    };
-                  });
-              } else {
-                const allArticlesData = { ...allArticle, ...allStrapiPodcast };
-                return allArticlesData.edges
-                  .filter(edge => !edge.node.secret)
-                  .map(edge => {
-                    return {
-                      ...edge.node,
-                      description: edge.node.excerpt,
-                      date: edge.node.date,
-                      url: strapiSiteMetadata.siteUrl + edge.node.slug,
-                      guid: strapiSiteMetadata.siteUrl + edge.node.slug,
-                      // custom_elements: [{ "content:encoded": edge.node.body }],
-                      author: edge.node.author ? edge.node.author.name : '',
-                    };
-                  });
-              }
+            serialize: ({ query: { strapiSiteMetadata, allStrapiArticle, allStrapiPodcast } }) => {
+              const allArticlesData = { ...allStrapiArticle, ...allStrapiPodcast };
+              return allArticlesData.edges
+                .filter(edge => !edge.node.secret)
+                .map(edge => {
+                  return {
+                    ...edge.node,
+                    description: edge.node.excerpt,
+                    date: edge.node.published_at,
+                    url: strapiSiteMetadata.siteUrl + edge.node.fields.slug,
+                    guid: strapiSiteMetadata.siteUrl + edge.node.fields.slug,
+                    author: edge.node.authors.name ? edge.node.authors.name : '',
+                    custom_elements: [{ "content:encoded": edge.node.childMdBody.childMdx.rawBody }],
+                  };
+                });              
             },
             query:
-              local && !strapi
-                ? `
-              {
-                allArticle(sort: {order: DESC, fields: date}) {
-                  edges {
-                    node {
-                      body
-                      excerpt
-                      date
-                      slug
-                      title
-                      author
-                      secret
-                    }
-                  }
-                }
-              }
               `
-                : !local && strapi
-                ? `
               {
-                allContentfulArticle(sort: {order: DESC, fields: date}) {
+                allStrapiArticle(sort: {order: DESC, fields: published_at}) {
                   edges {
                     node {
                       excerpt
-                      date
-                      slug
-                      title
-                      body {
-                        childMarkdownRemark {
-                          html
+                      childMdBody {
+                        childMdx {
+                          rawBody
                         }
                       }
-                      author {
+                      published_at
+                      fields {
+                        slug
+                      }
+                      title
+                      authors {
                         name
                       }
                       secret
                     }
                   }
                 }
-              }
-              `
-                : `
-              {
-                allArticle(sort: {order: DESC, fields: date}) {
-                  edges {
-                    node {
-                      body
-                      excerpt
-                      date
-                      slug
-                      title
-                      author
-                      secret
-                    }
-                  }
-                }
-                allContentfulArticle(sort: {order: DESC, fields: date}) {
+                allStrapiPodcast(sort: {order: DESC, fields: published_at}) {
                   edges {
                     node {
                       excerpt
-                      date
-                      slug
-                      title
-                      body {
-                        childMarkdownRemark {
-                          html
+                      childMdBody {
+                        childMdx {
+                          rawBody
                         }
                       }
-                      author {
+                      published_at
+                      fields {
+                        slug
+                      }
+                      title
+                      authors {
                         name
                       }
                       secret
