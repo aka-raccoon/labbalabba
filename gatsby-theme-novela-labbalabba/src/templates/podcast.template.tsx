@@ -44,6 +44,15 @@ const Article: Template = ({ pageContext, location }) => {
 
   const { article, authors, next } = pageContext;
 
+  let podcastFrame;
+  if (article.podcastProvider.provider == "spotify") {
+    podcastFrame = <iframe src={article.podcastProvider.url} width="100%" height="232" frameBorder="0" allowTransparency="true" allow="encrypted-media"></iframe>;
+  } else if (article.podcastProvider.provider == "anchor") {
+    podcastFrame = <iframe src={article.podcastProvider.url} width="100%" frameBorder="0" scrolling="no"></iframe>;
+  } else {
+    podcastFrame = <AudioPlayer src={article.podcastProvider.url} customAdditionalControls={[]} /> 
+  }
+
   useEffect(() => {
     const calculateBodySize = throttle(() => {
       const contentSection = contentSectionRef.current;
@@ -91,12 +100,8 @@ const Article: Template = ({ pageContext, location }) => {
       <ArticleBody ref={contentSectionRef}>
         <MDXRenderer content={article.body}>
           <ArticleShare />
-          <AudioBody>
-            <AudioPlayer
-                src={article.podcastUrl}
-                customAdditionalControls={[]}
-                // other props here
-            />  
+          <AudioBody>        
+            {podcastFrame} 
           </AudioBody>          
         </MDXRenderer>
       </ArticleBody>
@@ -190,47 +195,4 @@ const AudioBody = styled.div`
   max-width: 800px;
   width: ${(910 / 1140) * 100}%;
   margin: 55px auto;
-
-  .rhap_container {
-    background: ${p => p.theme.colors.inputBackground};
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 10);
-    border-radius: 10px;
-  }
-
-  .rhap_download-progress {
-    background-color: ${p => p.theme.colors.grey};
-  }
-
-  .rhap_progress-filled {
-    background-color: ${p => p.theme.colors.primary};
-  }
-
-  .rhap_progress-indicator {
-    background: ${p => p.theme.colors.primary};
-  }
-
-  .rhap_time {
-    color: ${p => p.theme.colors.articleText};
-  }
-
-  .rhap_main-controls-button {
-    color: ${p => p.theme.colors.articleText};
-  }
-
-  .rhap_volume-button {
-    color: ${p => p.theme.colors.articleText};
-  }
-
-  .rhap_volume-indicator {
-    background: ${p => p.theme.colors.primary};
-  }
-
-  .rhap_volume-filled {
-    background-color: ${p => p.theme.colors.primary};
-  }
-
-  .rhap_volume-bar {
-    background-color: ${p => p.theme.colors.grey};
-  }  
-
 `;

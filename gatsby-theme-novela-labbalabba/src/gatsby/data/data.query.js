@@ -168,7 +168,10 @@ module.exports.strapi = {
             }
           }
           excerpt
-          podcastUrl
+          podcastProvider {
+            provider
+            url
+          }
           subscription
           hero {
             full: childImageSharp {
