@@ -34,26 +34,19 @@ const plugins = [
   {
     resolve: `gatsby-plugin-google-analytics`,
     options: {
-      trackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
-    },
-  },
-  {
-    resolve: "gatsby-plugin-mailchimp",
-    options: {
-      endpoint:
-        process.env.MAILCHIMP_ENDPOINT,
+      trackingId: process.env.GATSBY_GOOGLE_ANALYTICS_TRACKING_ID,
     },
   },
   {
     resolve: `gatsby-source-strapi`,
     options: {
-      apiURL: process.env.STRAPI_URL,
+      apiURL: process.env.GATSBY_STRAPI_URL,
       queryLimit: 1000,
       contentTypes: ["article", "author", "podcast", "move"],
       singleTypes: ["site-metadata"],
       loginData: {
-        identifier: process.env.STRAPI_USER,
-        password: process.env.STRAPI_PASSWORD,
+        identifier: process.env.GATSBY_STRAPI_USER,
+        password: process.env.GATSBY_STRAPI_PASSWORD,
       },
     },
   },
