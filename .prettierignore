@@ -14,3 +14,6 @@
 
 # Ignore nothing for the theme workspace
 !/@narative
+
+# Except plugins
+!/plugins

@@ -78,3 +78,6 @@ yarn-error.log
 
 # NPM lock files
 package-lock.json
+
+# Local Netlify folder
+.netlify
