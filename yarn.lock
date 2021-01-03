@@ -13097,9 +13097,9 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
 netlify-plugin-gmail@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/netlify-plugin-gmail/-/netlify-plugin-gmail-1.0.0.tgz#63cea807f89ceceba47a12a86ffb91b8eea6b396"
-  integrity sha512-YXmh6yHB8h2KYOOX5Aw181IRs7E2Yxe6Ulvr/9CiBRZ7iYkzBbQTdYMwYdRjgfryL2R5KRTkLwpuZM65AC1B4w==
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/netlify-plugin-gmail/-/netlify-plugin-gmail-1.0.1.tgz#986bdb05dc5de52a51d2101046cab1d808470473"
+  integrity sha512-A7wWyaH814yPJt3o/wC0SXzaFWv8Qo1hNGUOzRUR0WH41hLYIdoWbS8ly/5ykcot+1mTXRaMgH8duGyg+mkvoA==
   dependencies:
     ejs "^3.1.5"
     googleapis "^66.0.0"
