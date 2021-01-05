@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 106 28" width="400px">
+  <defs/>
+  <path d="M16.85 7.7a6.08 6.08 0 00-2.9 1.84h-.04l.03.02-.04.06-.02-.02.14-.25c3.37-3.9 3.78-2.19 7.17-3.73-4.33-2.12-5.06-1.73-7.1 2.27-1.15-4.84-3.46-6.87-9.05-6.37 2.4 3.52 8 2.97 8.39 7.67C10.65 3.68 3.9 3.66.95 8.09c4.6-1.05 7.96-1.89 11.25.7-3.63-.22-6.64-.62-7.58 5.2 1.47-1.6 6.8-4.07 8.55-4.22-3.94 5.85-2.05 19.7-5.3 18.54h3.95c0-6.2-.32-13.09 1.84-18.28.18-.08.35-.05.5-.07 1.49 1 6.24 8.76 6.18 10.54 2.22-4.4-.8-9.1-4.99-10.81 5.17-.58 5.47.78 8.33 3.76.37-3.6-2.23-7-6.83-5.75z"/>
+  <text x="12.66" y="27.8" fill="#639" font-family="'Javanese Text'" font-size="13.33" font-weight="400" style="line-height:0;-inkscape-font-specification:'Javanese Text'">
+    <tspan x="12.66" y="27.8" dx="0 0 0 0 0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0 0 0 0 0" style="line-height:1.85;-inkscape-font-specification:'Javanese Text'"><tspan fill="#000" dx="0" dy="0" font-family="monospace" font-weight="700" letter-spacing=".06" style="line-height:1.85;-inkscape-font-specification:'monospace Bold'" word-spacing=".16">labba<tspan fill="#535d6c">la</tspan><tspan fill="#fed100">b</tspan><tspan fill="#009b3a">b</tspan><tspan fill="#535d6c">a</tspan></tspan></tspan>
+  </text>
+</svg>
