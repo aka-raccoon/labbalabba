@@ -21,8 +21,7 @@ import ArticleShare from "../sections/article/Article.Share";
 import ArticleFooter from './article.footer.template';
 
 import { Template } from "@types";
-import AudioPlayer from 'react-h5-audio-player';
-import 'react-h5-audio-player/lib/styles.css';
+
 
 
 const siteQuery = graphql`
@@ -34,6 +33,7 @@ const siteQuery = graphql`
 `;
 
 const Article: Template = ({ pageContext, location }) => {
+ 
   const contentSectionRef = useRef<HTMLElement>(null);
 
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
@@ -49,8 +49,6 @@ const Article: Template = ({ pageContext, location }) => {
     podcastFrame = <iframe src={article.podcastProvider.url} width="100%" height="232" frameBorder="0" allowTransparency="true" allow="encrypted-media"></iframe>;
   } else if (article.podcastProvider.provider == "anchor") {
     podcastFrame = <iframe src={article.podcastProvider.url} width="100%" frameBorder="0" scrolling="no"></iframe>;
-  } else {
-    podcastFrame = <AudioPlayer src={article.podcastProvider.url} customAdditionalControls={[]} /> 
   }
 
   useEffect(() => {
@@ -102,7 +100,9 @@ const Article: Template = ({ pageContext, location }) => {
           <ArticleShare />
           <AudioBody>        
             {podcastFrame} 
-          </AudioBody>          
+
+          </AudioBody>  
+    
         </MDXRenderer>
       </ArticleBody>
       <ArticleFooter pageContext={pageContext} />
