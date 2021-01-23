@@ -3,7 +3,7 @@ import mediaqueries from "@styles/media";
 import styled from "@emotion/styled";
 import PropTypes from 'prop-types';
 import { withCustomAudio  } from 'react-soundplayer/addons';
-import { PlayButton, Progress, VolumeControl, Timer } from 'react-soundplayer/components';
+import { PlayButton, Progress, Timer } from 'react-soundplayer/components';
 import 'react-soundplayer/styles/buttons.css';
 import 'react-soundplayer/styles/cover.css';
 import 'react-soundplayer/styles/icons.css';
@@ -12,15 +12,17 @@ import 'react-soundplayer/styles/progress.css';
 
 class BackgroundSoundPlayer extends Component {
   render() {
-    const { trackTitle, trackName,trackImage, bgColor, duration, currentTime } = this.props;
+    var { podcastGuest, podcastName, podcastImage, bgColor, duration, currentTime } = this.props;
+
+    bgColor = bgColor ? bgColor : "#141414"
 
     return (
       <AudioContainer bgColor={bgColor}>
-        <ImageContainer> <TrackImage src={trackImage} /> </ImageContainer>  
+        <ImageContainer> <TrackImage src={podcastImage} /> </ImageContainer>  
         <AudioSection>
           <Titles>
-              <TrackTitle>{trackName ? trackName : ''}</TrackTitle>
-              <TrackName>{trackTitle ? trackTitle : ''}</TrackName>
+              <TrackTitle>{podcastName ? podcastName : ''}</TrackTitle>
+              <TrackName>{podcastGuest ? podcastGuest : ''}</TrackName>
           </Titles>
           <AudioControllers bgColor={bgColor}>
               <PlayButton {...this.props} />            
@@ -37,6 +39,10 @@ class BackgroundSoundPlayer extends Component {
 
 BackgroundSoundPlayer.propTypes = {
   streamUrl: PropTypes.string.isRequired,
+  bgColor: PropTypes.string,
+  podcastImage: PropTypes.string,
+  podcastName: PropTypes.string,
+  podcastGuest: PropTypes.string,
 };
 
 export default withCustomAudio(BackgroundSoundPlayer);

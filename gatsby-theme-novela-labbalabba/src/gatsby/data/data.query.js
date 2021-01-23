@@ -159,6 +159,12 @@ module.exports.strapi = {
           authors {
             name
           }
+          guests {
+            name
+          }
+          episodeNum
+          podcastImg
+          podcastPlayerColor
           date: published_at(formatString: "MMMM Do, YYYY")
           dateForSEO: published_at
           timeToRead: duration

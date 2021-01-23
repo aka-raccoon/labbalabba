@@ -42,22 +42,24 @@ const Article: Template = ({ pageContext, location }) => {
  
   const { article, authors, next } = pageContext;
 
-  const trackUrl = 'https://anchor.fm/s/451f4768/podcast/play/25102821/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2021-0-20%2F83fc4d6a-7e83-b48d-9046-33d41aef1c41.mp3';
-  const trackImage = "https://d3t3ozftmdmh3i.cloudfront.net/production/podcast_uploaded_episode/11496778/11496778-1610962795364-cc512b44a096a.jpg"
-  const trackTitle = 'Katrin Wow';
-  const trackName = 'Labba Labba Podcast - Episode 4';
+  const podcastGuest = article.guests.reduce((curr, next, index, array) => {
+    if (array.length === 1) {
+      return next.name;
+    }
 
-  let podcastFrame;
+    return `${curr + next.name}, `;
+  }, ``);
+
+  const podcastName = `${name} Podcast - Episode ${article.episodeNum}`;
+
+  let audioFrame;
   if (article.podcastProvider.provider == "spotify") {
-    podcastFrame = <iframe src={article.podcastProvider.url} width="100%" height="232" frameBorder="0" allowTransparency="true" allow="encrypted-media"></iframe>;
+    audioFrame = <iframe src={article.podcastProvider.url} width="100%" height="232" frameBorder="0" allowTransparency="true" allow="encrypted-media"></iframe>;
   } else if (article.podcastProvider.provider == "anchor") {
-    podcastFrame = <iframe src={article.podcastProvider.url} width="100%" frameBorder="0" scrolling="no"></iframe>;
+    audioFrame = <iframe src={article.podcastProvider.url} width="100%" frameBorder="0" scrolling="no"></iframe>;
   } else {
-    podcastFrame = <AudioPlayer streamUrl={trackUrl} trackTitle={trackTitle} trackName={trackName} bgImage={trackImage}/>
+    audioFrame = <AudioPlayer streamUrl={article.podcastProvider.url} podcastGuest={podcastGuest} podcastName={podcastName} podcastImage={article.podcastImg} bgColor={article.podcastPlayerColor}/>
   }
-
-
-
 
   useEffect(() => {
     const calculateBodySize = throttle(() => {
@@ -105,13 +107,10 @@ const Article: Template = ({ pageContext, location }) => {
       </MobileControls>
       <ArticleBody ref={contentSectionRef}>
         <MDXRenderer content={article.body}>
-          <ArticleShare />  
-
+          <ArticleShare />
           <AudioBody> 
-            {podcastFrame}
+            {audioFrame}
           </AudioBody>
-          
-    
         </MDXRenderer>
       </ArticleBody>
       <ArticleFooter pageContext={pageContext} />
