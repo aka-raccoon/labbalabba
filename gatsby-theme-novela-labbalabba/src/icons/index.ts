@@ -19,7 +19,10 @@ import TripAdvisor from './social/TripAdvisor.Icon';
 import Buymeacoffee from './social/Buymeacoffee.Icon';
 import Mailto from './social/Mailto.Icon';
 import Url from './social/Url.Icon';
-import Anchor from './social/Anchor.Icon'
+import Anchor from './social/Anchor.Icon';
+import Spotify from './social/Spotify.Icon';
+import GooglePodcast from './social/GooglePodcast';
+import ApplePodcast from './social/ApplePodcast';
 
 // UI
 import ChevronLeft from './ui/ChevronLeft.Icon';
@@ -32,6 +35,12 @@ import ToggleClose from './ui/ToggleClose.Icon';
 import Rows from './ui/Rows.Icon';
 import Tiles from './ui/Tiles.Icon';
 import Podcast from './ui/Podcast.Icon';
+
+//Podcast
+import AnchorBig from './podcast/AnchorBig.Icon';
+import SpotifyBig from './podcast/SpotifyBig.Icon';
+import GooglePodcastBig from './podcast/GooglePodcastBig';
+import ApplePodcastBig from './podcast/ApplePodcastBig';
 
 export default {
   Behance,
@@ -55,6 +64,9 @@ export default {
   Mailto,
   Url,
   Anchor,
+  Spotify,
+  GooglePodcast,
+  ApplePodcast,
 
   ChevronLeft,
   Copied,
@@ -66,4 +78,9 @@ export default {
   Rows,
   Tiles,
   Podcast,
+
+  AnchorBig,
+  SpotifyBig,
+  GooglePodcastBig,
+  ApplePodcastBig
 };
