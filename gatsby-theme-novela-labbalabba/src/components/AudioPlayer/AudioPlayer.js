@@ -50,6 +50,13 @@ export default withCustomAudio(BackgroundSoundPlayer);
 const AudioSection = styled.div`
   width: 90%;
   margin: auto;
+  padding-left: 1rem;
+  
+  ${mediaqueries.phablet`
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+`}
 `
 
 const ImageContainer = styled.div`
@@ -103,8 +110,9 @@ const AudioControllers = styled.div`
     border-radius: 3px 0 0 3px;  }
 
   .sb-soundplayer-timer {
-    width: 110px;
+    width: 11rem;
     font-size: 12px;
+    text-align: right;
 
   }
 
@@ -117,6 +125,14 @@ const AudioControllers = styled.div`
   button:hover {
     transform: scale(1.2);
   }
+
+  ${mediaqueries.phablet`
+  padding-left: 0.5rem; 
+  padding-right: 0.5rem;
+  .sb-soundplayer-timer {
+    width: 7rem;
+  }
+  `}
 
   `
 
