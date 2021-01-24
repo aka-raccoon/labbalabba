@@ -157,26 +157,28 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
         parent: node,
         child: newNode,
     });
+    
+    if (node.internal.type !==  "StrapiWataboiAcknowledgment") {
 
-    createNodeField({
-      node,
-      name: `slug`,
-      value: generateSlug(
-        basePath,
-        generateArticlePermalink(
-          slugify(node.title, {
-            lower: true,
-          }),
-          node.published_at,
+      createNodeField({
+        node,
+        name: `slug`,
+        value: generateSlug(
+          basePath,
+          generateArticlePermalink(
+            slugify(node.title, {
+              lower: true,
+            }),
+            node.published_at,
+          ),
         ),
-      ),
-    });
-
-    createNodeField({
-      node,
-      name: `category`,
-      value: node.internal.type.toLowerCase().replace("strapi", ""),
-    });
-
+      });
+    
+      createNodeField({
+        node,
+        name: `category`,
+        value: node.internal.type.toLowerCase().replace("strapi", ""),
+      });
+    }
   }  
 };
