@@ -162,6 +162,10 @@ module.exports.strapi = {
           guests {
             name
           }
+          podcastLinks {
+            name
+            url
+          }
           episodeNum
           podcastImg
           podcastPlayerColor

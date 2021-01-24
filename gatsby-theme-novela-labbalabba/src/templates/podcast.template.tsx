@@ -12,6 +12,8 @@ import AudioPlayer from "@components/AudioPlayer"
 import mediaqueries from "@styles/media";
 import { debounce } from "@utils";
 
+import SocialLinks from "@components/SocialLinks";
+
 import ArticleAside from "../sections/article/Article.Aside";
 import ArticleHero from "../sections/article/Article.Hero";
 import ArticleControls from "../sections/article/Article.Controls";
@@ -27,6 +29,13 @@ const siteQuery = graphql`
     strapiSiteMetadata {
       name
     }
+    strapiWataboiAcknowledgment {
+      childMdBody {
+        childMdx {
+          body
+        }
+      }
+    }
   }
 `;
 
@@ -40,6 +49,8 @@ const Article: Template = ({ pageContext, location }) => {
   const results = useStaticQuery(siteQuery);
   const name = results.strapiSiteMetadata.name;
  
+  const acknowledgmentBody = results.strapiWataboiAcknowledgment.childMdBody.childMdx.body;
+
   const { article, authors, next } = pageContext;
 
   const podcastGuest = article.guests.reduce((curr, next, index, array) => {
@@ -77,7 +88,7 @@ const Article: Template = ({ pageContext, location }) => {
         const $imgs = contentSection.querySelectorAll("img");
 
         $imgs.forEach($img => {
-          // If the image hasn't finished loading then add a listener
+          // If t he image hasn't finished loading then add a listener
           if (!$img.complete) $img.onload = debouncedCalculation;
         });
 
@@ -111,7 +122,15 @@ const Article: Template = ({ pageContext, location }) => {
           <AudioBody> 
             {audioFrame}
           </AudioBody>
+          {article.podcastLinks.length  > 0  && (
+          <LinkContainer>
+            <SocialLinksSubject>Links to other podcast platforms:</SocialLinksSubject>
+            <SocialLinks links={article.podcastLinks} big="true"/>            
+          </LinkContainer>
+          )}
         </MDXRenderer>
+        <SideNote><MDXRenderer content={acknowledgmentBody} /></SideNote>
+        
       </ArticleBody>
       <ArticleFooter pageContext={pageContext} />
       {next.length > 0 && (
@@ -126,6 +145,41 @@ const Article: Template = ({ pageContext, location }) => {
 };
 
 export default Article;
+
+const SideNote = styled.p`  
+  line-height: 2.5;  
+  
+  text-align: center;
+  p {
+  color: ${p => p.theme.colors.grey};
+  font-size: 15px;
+  }
+`;
+
+const SocialLinksSubject = styled.p`  
+  line-height: 2.5;  
+  font-size: 18px;
+  padding-bottom: 1.5rem;
+`;
+
+const LinkContainer = styled.div`
+  max-width: 800px;
+  width: ${(910 / 1140) * 100}%;
+  margin: auto;
+  text-align: center;
+  padding-bottom: 5rem;
+  color: ${p => p.theme.colors.grey};
+
+  a {
+    margin: 3.5rem;
+  }
+
+  ${mediaqueries.phablet`
+    a {
+      margin: 1.5rem;
+    }
+  `}  
+  `
 
 const MobileControls = styled.div`
   position: relative;

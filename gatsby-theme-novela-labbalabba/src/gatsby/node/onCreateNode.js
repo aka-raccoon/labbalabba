@@ -137,7 +137,7 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     });
   }
 
-  if (node.internal.type === "StrapiArticle" || node.internal.type ===  "StrapiPodcast") {
+  if (node.internal.type === "StrapiArticle" || node.internal.type ===  "StrapiPodcast" || node.internal.type ===  "StrapiWataboiAcknowledgment") {
     const newNode = {
         id: createNodeId(`${node.id} >>> MdBody`),
         parent: node.id,
