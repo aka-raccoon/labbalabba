@@ -9,6 +9,7 @@ interface SocialLinksProps {
     name: string;
     url: string;
   }[];
+  big: boolean;
   fill: string;
 }
 
@@ -34,6 +35,13 @@ const icons = {
   mailto: Icons.Mailto,
   url: Icons.Url,
   anchor: Icons.Anchor,
+  spotify: Icons.Spotify,
+  spotifybig: Icons.SpotifyBig,
+  anchorbig: Icons.AnchorBig,
+  googlepodcastbig: Icons.GooglePodcastBig,
+  googlepodcast: Icons.GooglePodcast,
+  applepodcast: Icons.ApplePodcast,
+  applepodcastbig: Icons.ApplePodcastBig,
 };
 
 const getHostname = url => {
@@ -46,6 +54,7 @@ const getServicename = url => {
 
 const SocialLinks: React.FC<SocialLinksProps> = ({
   links,
+  big = false,
   fill = '#73737D',
 }) => {
   if (!links) return null;
@@ -53,7 +62,10 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   return (
     <>
       {links.map(option => {
-        const name = option.name || getHostname(option.url) || getServicename(option.url);
+        var name = option.name || getHostname(option.url) || getServicename(option.url);
+        if (big) {
+          name = `${name}big`
+        }
         const Icon = icons[name] ? icons[name] : icons['url'];
         if (!Icon) {
           throw new Error(

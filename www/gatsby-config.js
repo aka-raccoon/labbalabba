@@ -43,7 +43,7 @@ const plugins = [
       apiURL: process.env.GATSBY_STRAPI_URL,
       queryLimit: 1000,
       contentTypes: ["article", "author", "podcast", "move"],
-      singleTypes: ["site-metadata"],
+      singleTypes: ["site-metadata", "wataboi-acknowledgment"],
       loginData: {
         identifier: process.env.GATSBY_STRAPI_USER,
         password: process.env.GATSBY_STRAPI_PASSWORD,
