@@ -40,7 +40,7 @@ const siteQuery = graphql`
 `;
 
 const Article: Template = ({ pageContext, location }) => {
- 
+
   const contentSectionRef = useRef<HTMLElement>(null);
 
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
@@ -48,7 +48,7 @@ const Article: Template = ({ pageContext, location }) => {
 
   const results = useStaticQuery(siteQuery);
   const name = results.strapiSiteMetadata.name;
- 
+
   const acknowledgmentBody = results.strapiWataboiAcknowledgment.childMdBody.childMdx.body;
 
   const { article, authors, next } = pageContext;
@@ -58,7 +58,11 @@ const Article: Template = ({ pageContext, location }) => {
       return next.name;
     }
 
-    return `${curr + next.name}, `;
+    if (index === array.length - 1) {
+      return `${curr + next.name}`;
+    }
+
+    return `${curr + next.name} & `;
   }, ``);
 
   const podcastName = `${name} Podcast - Episode ${article.episodeNum}`;
@@ -69,7 +73,7 @@ const Article: Template = ({ pageContext, location }) => {
   } else if (article.podcastProvider.provider == "anchor") {
     audioFrame = <iframe src={article.podcastProvider.url} width="100%" frameBorder="0" scrolling="no"></iframe>;
   } else {
-    audioFrame = <AudioPlayer streamUrl={article.podcastProvider.url} podcastGuest={podcastGuest} podcastName={podcastName} podcastImage={article.podcastImg} bgColor={article.podcastPlayerColor}/>
+    audioFrame = <AudioPlayer streamUrl={article.podcastProvider.url} podcastGuest={podcastGuest} podcastName={podcastName} podcastImage={article.podcastImg} bgColor={article.podcastPlayerColor} />
   }
 
   useEffect(() => {
@@ -119,18 +123,18 @@ const Article: Template = ({ pageContext, location }) => {
       <ArticleBody ref={contentSectionRef}>
         <MDXRenderer content={article.body}>
           <ArticleShare />
-          <AudioBody> 
+          <AudioBody>
             {audioFrame}
           </AudioBody>
-          {article.podcastLinks.length  > 0  && (
-          <LinkContainer>
-            <SocialLinksSubject>Links to other podcast platforms:</SocialLinksSubject>
-            <SocialLinks links={article.podcastLinks} big="true"/>            
-          </LinkContainer>
+          {article.podcastLinks.length > 0 && (
+            <LinkContainer>
+              <SocialLinksSubject>Links to other podcast platforms:</SocialLinksSubject>
+              <SocialLinks links={article.podcastLinks} big="true" />
+            </LinkContainer>
           )}
         </MDXRenderer>
         <SideNote><MDXRenderer content={acknowledgmentBody} /></SideNote>
-        
+
       </ArticleBody>
       <ArticleFooter pageContext={pageContext} />
       {next.length > 0 && (
